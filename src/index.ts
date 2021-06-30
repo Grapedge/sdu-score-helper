@@ -44,16 +44,16 @@ async function main() {
   }
 
   while (true) {
-    // 登录系统
-    const fetch = await createAuthFetch(
-      'http://bkjws.sdu.edu.cn/f/j_spring_security_thauth_roaming_entry',
-      options.casId,
-      options.password
-    );
-    await delay(1000);
-
-    // 轮询获取数据
     try {
+      // 登录系统
+      const fetch = await createAuthFetch(
+        'http://bkjws.sdu.edu.cn/f/j_spring_security_thauth_roaming_entry',
+        options.casId,
+        options.password
+      );
+      await delay(1000);
+
+      // 轮询获取数据
       while (true) {
         const scores = await getAllScores(fetch);
         // 获取本学期的课程
@@ -77,6 +77,7 @@ async function main() {
       }
     } catch (error) {
       console.log(error);
+      await delay(10000);
     }
   }
 }
