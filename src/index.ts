@@ -51,8 +51,10 @@ async function main() {
         options.casId,
         options.password
       );
+
       await delay(1000);
 
+      console.log('登录成功，脚本运行中...');
       // 轮询获取数据
       while (true) {
         const scores = await getAllScores(fetch);
@@ -72,11 +74,13 @@ async function main() {
           );
           postedCourses = currentScores.map((score) => score.courseId);
           writeFileSync(postedJsonPath, JSON.stringify(postedCourses));
+          console.log('成绩发送完毕，脚本继续运行...');
         }
         await delay(options.interval);
       }
     } catch (error) {
       console.log(error);
+      console.log('查询出错，将于十秒后重试...');
       await delay(10000);
     }
   }
