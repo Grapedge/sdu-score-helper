@@ -20,14 +20,6 @@ const createHtml = (score: Score) => `
   </tr>
   <tr>
     <td>
-      学年学期
-    </td>
-    <td>
-      ${score.semester}
-    </td>
-  </tr>
-  <tr>
-    <td>
       考试时间
     </td>
     <td>
