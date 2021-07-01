@@ -12,7 +12,6 @@ import { ScoreMailOptions, sendScoreMail } from './send-score-mail';
 type AppOptions = {
   casId: string;
   password: string;
-  semester: string;
   interval: number;
   smtp: SMTPTransport.Options;
   mail: ScoreMailOptions;
@@ -58,13 +57,9 @@ async function main() {
       // 轮询获取数据
       while (true) {
         const scores = await getAllScores(fetch);
-        // 获取本学期的课程
-        const currentScores = scores.filter(
-          (score) => score.semester === options.semester
-        );
         // 成绩有变动
-        if (currentScores.length !== postedCourses.length) {
-          const changes = currentScores.filter(
+        if (scores.length !== postedCourses.length) {
+          const changes = scores.filter(
             (score) => !postedCourses.includes(score.courseId)
           );
           await Promise.all(
@@ -72,7 +67,7 @@ async function main() {
               sendScoreMail(options.smtp, options.mail, score)
             )
           );
-          postedCourses = currentScores.map((score) => score.courseId);
+          postedCourses = scores.map((score) => score.courseId);
           writeFileSync(postedJsonPath, JSON.stringify(postedCourses));
           console.log('成绩发送完毕，脚本继续运行...');
         }

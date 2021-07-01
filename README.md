@@ -46,8 +46,6 @@ $ npm run build
 ```yaml
 casId: '学工号'
 password: '密码'
-# 查询成绩学期
-semester: '2020-2021-2'
 # 获取成绩时间间隔（单位毫秒），下面是 60s，建议频率不要太高
 interval: 60000
 # nodemailer smtp 传输选项
